@@ -2,6 +2,8 @@
 
 Master thesis submitted to Universität Stuttgart for graduation (2022).
 
+<p align="center"><img src="thesis_report/images/robot/aligned.png" width="750">
+
 ## Abstract
 
 The thesis proposes an artificial intelligence framework to develop generalized visual
@@ -27,3 +29,11 @@ DON representations autonomously picks single class generalized labels. Addition
 computing geometrically consistent 6D poses across semantically similar objects.
 Finally, the proposed framework demonstrates robustness in generalizing real-world
 caps and manipulation by employing a real-world robot manipulator.
+
+## Previews
+
+a. KeypointNet Convergence
+<p align="left"><img src="thesis_report/previews/keypointnet.gif" width="500">
+
+b. Spatial-Heatmap of tracked descriptor
+<p align="left"><img src="thesis_report/previews/tracking.png" width="500">
