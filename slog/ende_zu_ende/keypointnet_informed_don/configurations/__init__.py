@@ -1,0 +1,1 @@
+from slog.ende_zu_ende.keypointnet_informed_don.configurations.config import KeypointNetInformedDONConfig

@@ -1,0 +1,55 @@
+keypointnet:
+    n_keypoints: 100
+    bottleneck_dimension: 256
+    backbone: "resnet_34"
+
+don:
+    descriptor_dimension: 3
+    backbone: "resnet_18"
+    start_don_on_epoch: 1000
+
+optimizer:
+    name: Adam
+    learning_rate: 1e-3
+    enable_schedular: False
+    schedular_step_size: 1e-1
+
+loss:
+    multiview_consistency: 1.0
+    relative_pose: 0.2
+    separation: 1.0
+    silhouette: 1.0
+
+    reduction: "mean"
+    margin: 3
+
+    don: "pixelwise_correspondence_loss"
+    temperature: 0.1
+
+trainer:
+    epochs: 2000
+    enable_logging: True
+    tensorboard_path: sandbox/keypointnet_informed_don/tensorboard
+    training_directory: sandbox/keypointnet_informed_don/training
+    enable_checkpointing: True
+    model_path: sandbox/keypointnet__informed_don/trained_model
+    logging_frequency: 1
+    validation_frequency: 5
+
+datamodule:
+    rgb_directory: dataset/single_object_dataset/dataset/rgbs
+    depth_directory: dataset/single_object_dataset/dataset/depths
+    mask_directory: dataset/single_object_dataset/dataset/masks
+    extrinsic_directory: dataset/single_object_dataset/dataset/extrinsics_cam_to_world
+    camera_intrinsics_numpy_text: dataset/single_object_dataset/dataset/intrinsics.txt
+
+    depth_ratio: 1.0
+    test_size: 0.1
+
+    shuffle: True
+    random_illumination: False
+    background_randomization: False
+    masked_training: False
+
+    n_workers: 10
+    batch_size: 3

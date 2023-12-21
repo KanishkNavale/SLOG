@@ -1,0 +1,12 @@
+\chapter{Future Scope}
+As the Keypointnet is limited by the manifold losses for training objects with rotation in range $[0, \pi]$, a newer formulation will be engineered and applied.
+Furthermore, KeypointNet and \ac{DON} will be expanded to accommodate objects belonging to different classes.\\
+
+As of this writing, the \ac{DON} training cannot accommodate multiple similar object in an image as it is limited by the presented loss functions \parencites{florence2020dense}{adrian2022efficient}.
+To overcome this, ``Ranked InfoNCE Loss'' \cite{hoffmann2022ranking} will be adopted on the pixelwise scale to train \ac{DON} accommodating multiple similar
+objects in a scene.\\
+
+To build up appropriate states for the future robot path planning and grasping using model-based reinforcement learning \cite{kaiser2019model},
+\ac{DON} computed dense descriptor image will be encoded to a vector
+state $x \in \mathbb{R}^D$ instead of $I_D \in \mathbb{R}^{H \times W \times D}$ with the neural networks inspired from \cite{tschannen2018recent} for faster online training.
+The robot path planning will be based on the KeypointNet alternatively to the method trajectory generation proposed in \parencites{florence2019self}.

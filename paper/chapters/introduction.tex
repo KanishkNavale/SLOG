@@ -1,0 +1,43 @@
+As of this writing, the ideal object representation for robot grasping and manipulation tasks is yet unknown.
+The existing representations may not be the best for tackling more complex tasks as they lack actual
+object information belonging to the same class and configuration (shape, color and size).
+In industrial robot-based automation, the objects are specifically coded for their visual features using 2D and 3D vision systems.
+The downside of this lies in the fact that the robot has to be taught to pick every other part with its visual representation.
+This process comes with the tedious schedule of teaching the robot to pick every part
+irrespective of the part's configuration, and viewpoint. The solution lies in using artificial intelligence (AI) equipped robots.
+A deep learning neural network (DNN) is based on artificial neurons capable to learning a task and is good as the task related
+data it is trained on. The data used to train DNN is often expensive as it requires engineered features that DNN can predict or regress.
+SIFT~\cite{sift}, SURF~\cite{bay2008speeded} and ORB~\cite{rublee2011orb} produce dense local descriptors of an object in an image
+and serve as target features to train DNN
+to yield object representation for robot grasping furthermore, these features computed by \parencites{sift}{bay2008speeded}{rublee2011orb} come with its own inert
+limitations and cannot generalize objects well. Our interests of work is on reducing efforts to develop hand engineered features to train DNN
+and developing DNN that can generalize plathora of objects such that we spend less time teaching robot how to tend objects in realtime.
+
+
+In \citeyear{florence2018dense}, \citeauthor{florence2018dense}~\cite{florence2018dense} introduced a novel visual
+object representation to the robotics community,  terming it ``dense visual object descriptors''. DON, an aritificial intelligence
+framework proposed by
+\Citeauthor{florence2018dense}~\cite{florence2018dense} produces dense visual object descriptors. In detail, the DON converts every pixel in the
+image ($I[u, v] \in \mathbb{R}^3$) to a higher dimensional embedding ($I_D[u, v] \in \mathbb{R}^D$) such that $D \in \mathbb{N}^+$
+which are nothing but dense local descriptors
+of that pixel respective to the image. The dense visual object descriptor generalize an object up to a certain extent and have been recently
+applied to rope manipulation \cite{rope-manipulation},
+block manipulation \cite{block-manipulation}, robot control \cite{florence2019self}, fabric manipulation \cite{fabric-manipulation} and
+robot grasp pose estimation \parencites{kupcsik2021supervised}{adrian2022efficient}. \citeauthor{suwajanakorn2018discovery}~\cite{suwajanakorn2018discovery}
+propose self-supervised geometrically consistent keypoints, exploring the idea of optimizing a representation
+based on a sparse collection of keypoints or landmarks, but without access to keypoint annotations. The authors of \cite{suwajanakorn2018discovery}
+devise an end-to-end geometric reasoning framework
+first introduced by \cite{levine2016end} to regresses a set of geometrically consistent keypoints coined as KeypointNet.
+This means that KeypointNet is capable of generalizing objects without the need of hand engineered features.
+\citeauthor{suwajanakorn2018discovery}~\cite{suwajanakorn2018discovery} show that using two unique objective loss
+functions, namely, a relative pose
+estimation loss and a multi-view consistency goal, uncovers the consistent keypoints across multiple views and object instances.
+Their affine translation-equivariant design may extend to
+previously unknown object instances trained on ShapeNet \cite{chang2015shapenet} dataset.
+
+At first, we present modifications to the DNN inspired from \cite{florence2018dense} and \cite{suwajanakorn2018discovery} such that we seemlessly
+train and mine object representations composed of object generalizing dense local descriptors while training for KeypointNet task. Second, we develop synthetic
+dataset using \cite{blenderproc} to train the DNN and prove that
+the mined dense local descriptors from our framework is as robust as dense visual object descriptors produced from DON while consuming less computation resources.
+Additionally, we demonstrate an self-supervised framework to train DON with semantically equivalent objects which is not
+previously demonstrated in \parencites{florence2018dense}{florence2020dense}{kupcsik2021supervised}{adrian2022efficient}{hadjivelichkov2021fully}{nerf-Supervision} to train DON.

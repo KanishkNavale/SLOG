@@ -1,0 +1,36 @@
+don:
+    descriptor_dimension: 3
+    backbone: "resnet_34"
+
+optimizer:
+    name: Adam
+    learning_rate: 3e-5
+    enable_schedular: False
+    schedular_step_size: 1e-1
+
+loss:
+    name: pixelwise_correspondence_loss
+    reduction: mean
+    temperature: 0.1
+
+trainer:
+    epochs: 500
+    enable_logging: True
+    tensorboard_path: sandbox/don/tensorboard
+    training_directory: sandbox/don/training
+    enable_checkpointing: True
+    model_path: sandbox/don/trained_model
+    logging_frequency: 1
+    validation_frequency: 1
+
+datamodule:
+    rgb_directory: dataset/multi_cap_dataset/rgbs
+    mask_directory: dataset/multi_cap_dataset/masks
+
+    test_size: 0.1
+
+    shuffle: True
+
+    n_workers: 10
+    batch_size: 1
+    n_correspondence: 100

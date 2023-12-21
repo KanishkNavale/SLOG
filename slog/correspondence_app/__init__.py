@@ -1,0 +1,1 @@
+from slog.correspondence_app.direct_mapping_app import DirectCorrespondenceMappingApp

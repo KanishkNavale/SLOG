@@ -1,0 +1,44 @@
+We are solely interested in computing dense visual object descriptors of an object.
+The DON training strategy in \cite{florence2018dense} relies on the depth information for computing correspondences in an image pair using
+camera intrinsics and pose information \cite{hartley2003multiple}.
+However, when employing consumer-grade depth cameras for capturing the depth information,
+the depth cameras capture noisy depth in cases of tiny, reflecting objects, which are common in
+industrial environments. In the meantime, \citeauthor{kupcsik2021supervised}~\cite{kupcsik2021supervised} used Laplacian Eigenmaps \cite{belkin2003laplacian}
+to embed a 3D object model into an optimally generated embedding space acting as an target to train DON in a supervised fashion.
+The optimal embeddings brings in more domain knowledge by associating 3D object model to images views.
+\citeauthor{kupcsik2021supervised}~\cite{kupcsik2021supervised} efficiently apply it to smaller, texture-less and
+reflective objects by eliminating the need of the depth information. \citeauthor{kupcsik2021supervised}~\cite{kupcsik2021supervised}
+further compare training strategies for producing 6D grasps for industrial objects and show that a unique supervised training approach
+increases pick-and-place resilience in industry-relevant tasks.
+
+\citeauthor{florence2020dense}~\cite{florence2020dense} has found that the pixelwise contrastive loss function used to train DON might not perform well if a computed
+correspondence is spatially inconsistent (analogously to the case of noisy depth information). This further highlights that the precision
+of contrastive-trained models can be sensitive to the
+relative weighting between positive-negative sampled pixels. Instead, the \citeauthor{florence2020dense}~\cite{florence2020dense} introduces a new continuous
+sampling-based loss function called ``Pixelwise Distribution Loss''.
+The pixelwise distribution loss is much more effective as it is a smooth continuous pixel space sampling method compared to the
+discrete pixel space sampling method based on pixelwise contrastive loss.
+The pixelwise distribution loss regresses a set of probability distribution heatmaps aiming to minimize the divergence between the predicted
+heatmap and the ground truth heatmap mitigating errors in correspondences. Futhermore, the pixelwise distribution loss does not
+need non-matching correspondences compared to the
+the pixelwise contrastive loss.
+Differently, \citeauthor{hadjivelichkov2021fully}~\cite{hadjivelichkov2021fully} extends the DON training using semantic correspondences between objects in multi-object
+or cluttered scenes overcoming the limitations of \parencites{hartley2003multiple}{belkin2003laplacian}.
+The authors, \citeauthor{hadjivelichkov2021fully}~\cite{hadjivelichkov2021fully} employ offline unsupervised clustering based on confidence in object similarities to generate hard and soft correspondence labels.
+The computed hard and soft labels lead DON in learning class-aware dense object descriptors, introducing hard and soft margin constraints in the proposed pixelwise contrastive loss to train DON.
+Further eliminating the need for camera pose and intrinsic information along with depth information to compute correspondences in an image pair, \citeauthor{nerf-Supervision}~\cite{nerf-Supervision} used
+NeRF~\cite{mildenhall2021nerf} to train DON. The NeRF~\cite{mildenhall2021nerf} recreates a 3D scene from a sequence of images captured by the smartphone camera. The correspondences are extracted from
+the synthetically reconstructed scene to train DON.
+Recently, based on SIMCLR inspired frameworks~\parencites{chen2020simple}{zbontar2021barlow},
+\citeauthor{adrian2022efficient}~\cite{adrian2022efficient} introduced similar architecture and another novel loss function called
+``Pixelwise NT-Xent loss'' to train DON more robustly.
+The pixelwise ntxent loss consumes synthetic correspondences independent of depth cameras computed from image augmentations to train DON.
+\citeauthor{adrian2022efficient}'s experiments show that the novel loss function is invariant with respect to the batch size.
+Additionally adopted ``$PCK@k$''
+metric has been adopted as in preceedings \parencites{chai2019multi}{fathy2018hierarchical} to evaluate and benchmark
+DON on cluttered scenes previously not benchmarked.
+
+In the proposed framework we do not use any loss functions in
+\parencites{florence2018dense}{florence2020dense}{kupcsik2021supervised}{adrian2022efficient}{hadjivelichkov2021fully}{nerf-Supervision} to train DON
+however we adopt the network architecture from \cite{florence2018dense} and train on the task of the ``KeypointNet''\cite{suwajanakorn2018discovery}
+with adaption of the loss functions proposed in \parencites{suwajanakorn2018discovery}{zhao2020learning}.

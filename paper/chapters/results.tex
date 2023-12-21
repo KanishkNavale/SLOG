@@ -1,0 +1,11 @@
+We implemented out training and benchmarking using ``PyTorch-Lightning''\cite{falcon2019pytorch} and ``PyTorch''\cite{paszke2019pytorch} libraries.
+Futhermore, we employ
+``ADAM''\cite{kingma2014adam} optimizer to optimize our model for 1000 epochs with learning rate of
+$\alpha = 10^{-3}, \beta_1 = 0.9 \text{ and } \beta_2 = 0.999$ with weight decay $\eta =10^{-6}$.
+Addtionally, we reduce the learning rate by a factor of $0.9$ every 2500 opimtization steps.
+We set the all the loss weights to 1.0 except variance loss weight to $w_{var} = 10^{-4}$ and mean reduce our batch-wise losses.
+The proposed novel DNN model is benchamarked against standard DON model for computed dense visual object descriptors and
+computation resources used where batch size plays a major influence.
+For training standard DON model, we import training settings, evaluation
+metrics and the method of generating synthetic correspondences as in
+\cite{adrian2022efficient}\footnote{GitHub link to our implementation of generating synthetic correspondences: \url{https://github.com/KanishkNavale/Mapping-Synthetic-Correspondences-in-an-Image-Pair}}.

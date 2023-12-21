@@ -1,0 +1,91 @@
+\documentclass[english]{article}
+
+\usepackage{arxiv}
+
+\usepackage[utf8]{inputenc} % allow utf-8 input
+\usepackage[T1]{fontenc}    % use 8-bit T1 fonts
+\usepackage{hyperref}       % hyperlinks
+\usepackage{url}            % simple URL typesetting
+\usepackage{booktabs}       % professional-quality tables
+\usepackage{amsfonts, amsmath}       % blackboard math symbols
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{microtype}      % microtypography
+\usepackage{cleveref}       % smart cross-referencing
+\usepackage{lipsum}         % Can be removed after putting your text content
+\usepackage{graphicx}
+\usepackage{doi}
+\usepackage{babel}
+\usepackage{csquotes}
+
+
+% Bibliography
+\usepackage[%
+  backend=biber,%
+  backref=false,%
+  giveninits=true,%
+  autocite=inline,%
+  sorting=none,% in order of occurence. Other option: nyt (name year title)
+  sortcites=true,%
+  mincitenames=1,%
+  maxcitenames=2,%
+  maxbibnames=10,%
+  doi=false,%
+  isbn=false,%
+  url=false,%
+  natbib=true,
+]{biblatex}
+
+\addbibresource{references.bib}
+
+\title{Training Dense Object Nets While Not Training Dense Object Nets}
+
+% Here you can change the date presented in the paper title
+%\date{September 9, 1985}
+% Or remove it
+%\date{}
+
+\author{ {Kanishk Navale, Ralf Gulde, Marc Tuscher} \\
+	Sereact, \\
+	Stuttgart, Germany \\
+	\texttt{firstname.lastname@sereact.ai} \\
+}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+	We propose a framework to train Dense Object Nets (DON) with no intent to train DON;
+	instead, we mine the dense visual object descriptors produced by DON while training another
+	network unrelated to creating dense visual object descriptors. The dense visual object descriptors
+	from the DON are object view-invariant, configuring and generalising the object's
+	geometrical structure. However, an object image pair is required to train DON with the
+	corresponding mapping, and recent research developments proves that the DON is as better as the number
+	of correspondence supplied to it while training. The computation costs increase as the number
+	of image-pair correspondences increases with the descriptor dimension, limiting one to produce
+	descriptors of less dense dimension. Our framework does not require any image-pair correspondence mapping.
+	It yields denser visual descriptors while consuming lesser computation resources while not compromising
+	the robustness of the dense visual object descriptors compared to DON.
+
+\end{abstract}
+
+% keywords can be removed
+\keywords{Dense Object Nets \and Second keyword \and More}
+
+
+\section{Introduction}
+\input{chapters/introduction}
+
+\section{Related Work}
+\input{chapters/realated.tex}
+
+\section{Methodology}
+\input{chapters/methodology.tex}
+
+\section{Results and Benchmarking}
+\input{chapters/results.tex}
+
+
+\printbibliography
+
+
+\end{document}

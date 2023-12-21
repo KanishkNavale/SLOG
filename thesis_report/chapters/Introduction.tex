@@ -1,0 +1,110 @@
+\chapter{Introduction}
+
+Creating a general-purpose robot that can carry out practical activities, like Chappie or C-3PO,
+is one of the objectives of robotics in general and robotic manipulation in particular.
+Even if advancements toward this objective have been made recently in adjacent domains, it is still a work in progress.
+E.g., AlphaGo \cite{silver2018general}, a gameplaying artificial intelligence system trained entirely on self-play,
+defeated Lee Sedong, the world's best human Go player at the time. Subsequently, \citeauthor{silver2016mastering}~\cite{silver2016mastering},
+developed artificial intelligence algorithms mastering the game of chess, Go, World of Warcraft and Shogi, surpassing human playing expertise. Most of these
+algorithms learn by drawing understanding directly from visual data such as gameplay recordings or online video streams emphasizing that the visual data is essential.
+\\
+
+
+Meanwhile, the launch of AlexNet \cite{krizhevsky2017imagenet} in 2012 transformed the realm of computer vision.
+Other visual tasks, such as semantic segmentation \cite{long2015fully}, object identification and recognition \cite{he2017mask},
+and human posture estimation \cite{guler2018densepose}, witnessed significant gains in the years that followed. Robotics has also made significant breakthroughs,
+ranging from self-driving cars to humanoid robots capable of performing remarkably active jobs recently developed using camera and other vision sensors.\\
+
+Despite these advancements, the most frequently used robotic manipulation systems haven't evolved much in the previous 30 years.
+Typical auto-factory robots continue to do repetitive operations such as welding and painting, with the robot following a pre-programmed course with no feedback from the surroundings.
+If we want to increase the utility of our robots, we must move away from highly controlled settings and robots that do repetitive actions with little feedback or adaptability capabilities.
+Liberating ourselves from these restraints of controlled settings based manufacturing would allow us to enter new markets, as witnessed by the proliferation of firms \cite{sereact} competing in the logistics domain. \\
+
+In this thesis, we want to take things further by providing a generalized approach for vision-based robot tasks in real-world contexts.
+We employ a combination of classical robotics, computer vision and current deep-learning methods.
+While there are lessons to be drawn from deep learning, artificial intelligence and computer vision breakthroughs,
+we highlight the particular problems of machine vision based problems in robot manipulation. We offer an innovative generalized approach to address them.
+
+
+
+
+\section{Motivation}
+
+As of this writing, the ideal object representation for robot grasping and manipulation tasks is yet unknown.
+The existing representations may not be the best for tackling more complex tasks as they lack actual
+object information belonging to the same class and configuration (shape, color and size).\\
+
+In industrial robot-based automation, the objects are specifically coded for their visual features using 2D and 3D vision systems.
+The downside of this lies in the fact that the robot has to be taught to pick every other part with its visual representation.
+This process comes with the tedious schedule of teaching the robot to pick every part
+irrespective of the part's configuration, and viewpoint. The solution lies in using artificial intelligence powered robots.\\
+
+With so much focus on modern artificial intelligence, it is easy to overlook that the topic is not new.
+Artificial intelligence has undergone several phases, each defined by whether the emphasis was on proving logical theorems or attempting to emulate the human mind through neurology.\\
+
+Artificial intelligence may be traced back to the late 1950s when computer pioneers such as Alan Turing and John von Neumann began investigating how machines might ``think''\cite{mit_article}.
+However, a watershed moment in artificial intelligence happened in 1957, when researchers demonstrated that if given an infinite amount of memory, a machine could answer any issue.\\
+
+The development of artificial intelligence made great strides in the 21st century.
+The first significant breakthrough was the creation of the self-learning neural network.
+By 2001, it had already outperformed humans in several domains, including object categorization and machine translation.
+Researchers enhanced its performance across a wide range of tasks over the following few years, thanks to advancements in the underlying technology.
+To a great extent artificial intelligence is empowered by machine learning and by \ac{DL} in particular.
+Machine learning enables computers to learn from data and experience in order to enhance their performance on certain tasks or decision-making processes.
+For this reason, machine learning employs statistics and probability theory.
+Furthermore, machine learning employs algorithms to read data, learn from it, and make decisions without the need for explicit programming.
+Machine learning algorithms are frequently classified as either supervised or unsupervised.
+Supervised algorithms may apply previous learning to new data sets, whereas unsupervised algorithms can derive conclusions from datasets.
+Additionally, machine learning algorithms are programmed to seek out linear and non-linear correlations in a set of data.
+The learning is accomplished by the application of statistical approaches to train the algorithm to categorize or predict from a dataset.\\
+
+\ac{DL} extends machine learning using multi-layered artificial neural networks, i.e., the so-called \ac{DNN} to achieve cutting-edge accuracy in object detection,
+speech recognition, and language translation.
+\ac{DNN} is a critical technology underlying autonomous automobiles because it allows machines to analyze enormous volumes of complicated data in real-time,
+such as identifying people's faces in an image or video.\\
+
+Artifical neural networks are based on biological neurons in the human brain and are made up of layers of linked nodes called ``neurons'' that include mathematical
+functions to analyze incoming input and anticipate an output value. Similar to how we learn from our parents, instructors, and peers, artificial neural networks
+learn by examples (datasets). Deep learning models performance continues to increase as more data is added.\\
+
+A \ac{CNN} is a \ac{DNN} that is designed to pick up features
+and patterns in structural data such as images. For example, having an extensive collection of object
+photos with more information such as depth and camera poses, \ac{CNN} will easily learn the task-specific visual features. Furthermore,
+with task-specific optimizations, \ac{CNN} can transform objects' visual features. \\
+
+These \ac{CNN} capabilities have enabled robots with skills to identify a part on an industrial fixture or in a bin since the networks have learned to recognise
+these parts from a series of images of these parts and other related visual data.
+If a new unseen part is in the bin, then
+the \ac{CNN} is on the verge of object detection failure halting the robot cell in production or increasing
+the frequency of bin changing due to unpicked parts, which is an unfavorable industrial situation.\\
+
+One of the ways to address this issue is by training a \ac{CNN} to predict or regress a center point on an object
+silhoutte which would then serve as a robot gripping point. This prediction is bound to fail when the object is of a complex
+or non-convex shape resulting in misalignment and subsequently in robot grasping failure. In such a case, the neural networks
+are additionally trained to predict the object pose.
+These joint predictions of object recognition and its pose are often computationally costly resulting in
+increase of the robot system engineering costs to meet the production goals.\\
+
+We are now coming to an understanding that the two significant problems involve robot teaching for all the objects
+and in which orientation the robot has to pick the object.\\
+
+\citeauthor{florence2018dense}~\cite{florence2018dense} introduced a novel visual
+object representation to the robotics community,  terming it ``dense object descriptors''. The dense object descriptors could
+generalize an object up to a certain extent and have been recently applied to rope manipulation \cite{rope-manipulation},
+block manipulation \cite{block-manipulation}, robot control \cite{florence2019self}, fabric manipulation \cite{fabric-manipulation} and
+robot grasp pose estimation \cite{kupcsik2021supervised}. This prior research lays one of the solid foundations for
+this thesis for object generalization.\\
+
+The next area of this thesis is to encompass the dense object descriptors-based representations with 6D-Pose~\footnote{6D-Pose of an object refers to the object position and rotation in a 3D space.}
+information about the object. Given a particular photograph of an object with its depth map (together \acs{RGB-D} data) and its camera relative position,
+the photograph pixels can be converted to a set of 3D points or pointcloud \cite{pointcloud-mapping}.
+The object pointcloud can be sampled using various methodologies \parencites{image-segment-algos}{object-tracking}.
+The obtained object pointcloud can be transformed into a 6D-Pose using \ac{PCA}~\cite{pca} or \ac{SVD}~\cite{svd} methods.
+Meanwhile, \ac{DNN} can be trained for multiple tasks \cite{multi-task-dl}. We can, thus, adopt \ac{PCA} or \ac{SVD} methodologies to
+train the neural network to predict dense object descriptors with object poses while the \ac{DNN} learns and
+embed both the task information.\\
+
+If the object is occluded, then the pose associated with it changes causing robot grasping failure. \citeauthor{suwajanakorn2018discovery}~\cite{suwajanakorn2018discovery} introduced
+a method to train \ac{CNN} for pose reconstruction based on geometrically consistent keypoints, i.e., a point that carries certain (predefined) properties.
+One of the advantages is that when the object is occluded, the network can recall the hidden keypoints in the occlusion. This way, such a network is still able to reconstruct object pose from which
+one can now compute robot grasping pose consistently.\\

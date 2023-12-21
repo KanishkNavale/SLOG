@@ -1,0 +1,207 @@
+\chapter{State of the Art}
+
+The term ``state of the art'' refers to the most advanced degree of development accomplished in a design, method, material, or technology. It is an important consideration in any engineering feat.
+The overview section focuses on recent developments in the machine vision field that generalize object representations for robot grasping.
+
+\section{Overview}
+
+In 2017, \citeauthor{schmidt2016self}~\cite{schmidt2016self} introduced instance-level generalization of objects using dense object descriptors.
+The dense object descriptors are embeddings for pixels in an image such that all pixels are uniquely defined with respect to each other.
+Specifically, \citeauthor{schmidt2016self}~\cite{schmidt2016self} could generalize a human body pose with sequenced
+RGB-D data with mutual temporal correspondence using \ac{SIFT} \cite{sift}. In this case, the dense object
+descriptors are computed using non-linear functions ($f: I_{RGB}[u,v] \in \mathbb{R}^3 \rightarrow I_D[u, v] \in \mathbb{R}^D$)
+converting an image pixel to an arbitrary vector of length $D \in \mathbb{N}^+$.
+Based on the adaptation of previously introduced non-linear function popularly known as the constrastive loss \cite{zhao2021contrastive}, ``Pixelwise Contrastive Loss'' is introduced by \citeauthor{florence2018dense}~\cite{florence2018dense}. \citeauthor{florence2018dense}~\cite{florence2018dense} introduced \ac{DON}
+which is a self-supervised network that converts an \ac{RGB} picture into a descriptor space image that implicitly stores essential object features invariant to the viewpoint, configuration and
+illumination. \ac{DON}'s self-supervised training is impressive in terms of speed in training and generalization. We can apply it to random objects
+and deploy it in half an hour \cite{florence2018dense}. Furthermore, \ac{DON} learns from correspondences in an image pair.\\
+
+In detail, the \ac{DON} converts every pixel ($I[u, v] \in \mathbb{R}^3$) in the \ac{RGB} image to a higher dimensional embedding ($I_D[u, v] \in \mathbb{R}^D$).
+In the field of machine learning or data engineering, embeddings are often applied for data dimensionality reduction, i.e.,
+reducing the number of data features to a lower feature space.
+A lower-dimensional data space computed from a higher-dimension space uses embeddings to preserve the Euclidean distance of the dataspace \cite{fedoruk2018dimensionality}.
+In the case of the data dimensionality reduction, the embeddings preserve the linear distance in the data for reduction.
+The embeddings can be generated based on any property. For non-linear data dimensionality reduction,
+T-SNE~\cite{tsne} and Laplacian Eigenmaps~\cite{belkin2003laplacian} construct embeddings based on different properties in the data.
+Meanwhile, the higher dimension embedding computed from \ac{DON} as dense descriptors captures and embeds information for viewpoint invariance,
+illumination changes and object configuration from a sequence of images.\\
+
+The \ac{DON} training strategy relies on the depth information for computing correspondences in an image pair using camera intrinsics and pose information \cite{hartley2003multiple}.
+However, when employing consumer-grade depth cameras for capturing the depth information,
+the depth cameras capture noisy depth in cases of tiny, reflecting objects, which are common in
+industrial environments.
+In the meantime, \citeauthor{kupcsik2021supervised}~\cite{kupcsik2021supervised} used Laplacian Eigenmaps \cite{belkin2003laplacian}
+to embed a 3D object model into an optimally generated embedding space acting as an target to train \ac{DON} in a supervised fashion.
+The optimal embeddings brings in more domain knowledge by associating 3D object model to images views.
+\citeauthor{kupcsik2021supervised} efficiently apply it to smaller, texture-less and
+reflective objects by eliminating the need of the depth information. \citeauthor{kupcsik2021supervised}~\cite{kupcsik2021supervised}
+further compare training strategies for producing 6D grasps for industrial objects and show that a unique supervised training approach increases pick-and-place resilience in industry-relevant tasks.\\
+
+Differently, \citeauthor{hadjivelichkov2021fully}~\cite{hadjivelichkov2021fully} extends the \ac{DON} training using semantic correspondences between objects in multi-object
+or cluttered scenes overcoming the limitations of \parencites{hartley2003multiple}{belkin2003laplacian}.
+The authors, \citeauthor{hadjivelichkov2021fully}~\cite{hadjivelichkov2021fully} employ offline unsupervised clustering based on confidence in object similarities to generate hard and soft correspondence labels.
+The computed hard and soft labels lead \ac{DON} in learning class-aware dense object descriptors, introducing hard and soft margin constraints in the proposed pixelwise contrastive loss.\\
+
+\citeauthor{florence2020dense}~\cite{florence2020dense} has found that the pixelwise contrastive loss function used to train \ac{DON} might not perform well if a computed
+correspondence is spatially inconsistent (analogously to the case of noisy depth information). This further highlights that the precision of contrastive-trained models can be sensitive to the
+relative weighting between positive-negative sampled pixels. Instead, the \citeauthor{florence2020dense}~\cite{florence2020dense} introduces a new continuous
+sampling-based loss function called ``Pixelwise Distribution Loss''.
+The pixelwise distribution loss is much more effective as it is a smooth continuous pixel space sampling method compared to the discrete pixel space sampling method based on pixelwise contrastive loss.
+The pixelwise distribution loss regresses a set of probability distribution heatmaps aiming to minimize the divergence between the predicted
+heatmap and the ground truth heatmap mitigating errors in correspondences. Futhermore, the pixelwise distribution loss does not need non-matching correspondences compared to the
+the pixelwise contrastive loss.\\
+
+Based on SIMCLR inspired frameworks~\parencites{chen2020simple}{zbontar2021barlow},
+\citeauthor{adrian2022efficient}~\cite{adrian2022efficient} introduced similar architecture and another novel loss function called ``Pixelwise NT-Xent loss'' to train \ac{DON} more robustly.
+The pixelwise nt-xent loss consumes synthetic correspondences computed from image augmentations to train \ac{DON}.
+\citeauthor{adrian2022efficient}'s experiments show that the novel loss function is invariant with respect to the batch size. Additionally adopted ``$PCK@k$''
+metric has been adopted as in preceedings \parencites{chai2019multi}{fathy2018hierarchical} to evaluate and benchmark \ac{DON} on cluttered scenes previously not benchmarked.\\
+
+Further eliminating the need for camera pose and intrinsic information along with depth information to compute correspondences in an image pair, \citeauthor{nerf-Supervision}~\cite{nerf-Supervision} used
+\ac{NeRF}~\cite{mildenhall2021nerf} to train \ac{DON}. The \ac{NeRF} recreates a 3D scene from a sequence of images captured by the smartphone camera. The correspondences are extracted from
+the synthetically reconstructed scene to train \ac{DON}.\\
+
+Concerning object poses, \citeauthor{kpam}~\cite{kpam} offer an innovative formulation of category-level objects description
+using semantic 3D keypoints with the manipulation specified by geometric costs and restrictions on those keypoints.
+The formulation naturally enables the manipulation strategy to encompass 3D keypoint recognition,
+optimization-based robot action planning, and grasping-based action execution.
+\citeauthor{vecerik2020s3k}~\cite{vecerik2020s3k} further introduces self-supervised techniques in
+keypoint prediction for robot manipulability based on \parencites{yen2020learning}{sermanet2017time}{li2018deepim}{xiang2017posecnn},
+significantly reducing the need for human-labelled data and providing a robust detector for semantic 3D keypoints in their setup ``SEK''.
+Its main contribution comes from considering multi-view geometry as a source of elf-supervision for keypoint-based models.
+Furthermore, \citeauthor{vecerik2020s3k}~\cite{vecerik2020s3k} show the applicability of SEK to robotic tasks.
+It further shows how we can use unlabelled data combined with SEK to counteract the effects of domain shift and its ability to generalize across samples from the same category.\\
+
+\citeauthor{suwajanakorn2018discovery}~\cite{suwajanakorn2018discovery} propose self-supervised geometrically consistent keypoints, exploring the idea of optimizing a representation
+based on a sparse collection of keypoints or landmarks, but without access to keypoint annotations. The authors devise an end-to-end geometric reasoning framework
+to regresses a set of geometrically consistent keypoints coined as KeypointNet. The paper shows that using two unique objective loss
+functions, namely, a relative pose
+estimation loss and a multi-view consistency goal, uncovers the consistent keypoints across multiple views and object instances. Their affine translation-equivariant design may extend to
+previously unknown object instances and ShapeNet \cite{chang2015shapenet} categories. The identified keypoints on stiff
+3D pose estimation surpass those from a directly supervised learning baseline.\\
+
+Combining the frameworks \parencites{florence2018dense}{mildenhall2021nerf}{nerf-Supervision}{kpam}{vecerik2020s3k} as previously described,
+\citeauthor{ndfs}~\cite{ndfs} introduce \ac{DNN} for $SE(3)$ equivariant object representations for robot manipulation. The authors use neural energy fields to manipulate
+an object using semantic keypoints. \citeauthor{ndfs} demonstrate robot tasks of picking and placing mugs having a generalized representation.
+
+\section{Breakdown Analysis \& Comparison of Influential \ac{SOTA}}
+
+In this section, the \ac{SOTA} influential to this thesis is compared for its contribution, drawbacks with respective to the thesis addressed as relative drawbacks.
+
+
+
+\begin{longtable}{|p{7cm}|p{7cm}|}
+    \hline \multicolumn{1}{|c|}{\textbf{Contributions}}                                                                                                                      & \multicolumn{1}{c|}{\textbf{Relative Drawbacks}} \\ \hline
+    \endfirsthead
+
+    \multicolumn{2}{c}{\textit{Breakdown Analysis \& Comparison of Influential \ac{SOTA} -- continued}}                                                                                                                         \\
+    \hline \multicolumn{1}{|c|}{\textbf{Contributions}}                                                                                                                      & \multicolumn{1}{c|}{\textbf{Relative Drawbacks}} \\ \hline
+    \endhead
+
+    \hline \multicolumn{2}{r}{\textit{Continued on next page}}                                                                                                                                                                  \\
+    \endfoot
+
+    \endlastfoot
+    \multicolumn{2}{r}{{Self-supervised Visual Descriptor Learning for Dense Correspondence\cite{schmidt2016self}}}                                                                                                             \\ \hline
+    \begin{itemize}
+        \itemsep0em
+        \item Trained a \ac{CNN} trained on contrastive loss to compute descriptors.
+        \item Produced descriptors are invariant to viewpoint \& illumination.
+    \end{itemize}                                                                                             & \begin{itemize}
+                                                                                                                    \itemsep0em
+                                                                                                                    \item Using \ac{SIFT} for correspondence mapping isn't spatially accurate.
+                                                                                                                \end{itemize}                                       \\ \hline
+    \multicolumn{2}{m{14cm}}{\centering Dense Object Nets: Learning Dense Visual Object Descriptors By and For Robotic Manipulation\cite{florence2018dense}}                                                                    \\ \hline
+    \begin{itemize}
+        \itemsep0em
+        \item Used camera-based transformation to map correspondence in image pairs to train \ac{DON}.
+        \item Introduced a quick trainable \ac{DNN} called \ac{DON}.
+        \item Formulated ``Pixelwise Constrastive Loss'' to train \ac{DON}.
+        \item The descriptors computed from \ac{DON} can generalize an object.
+    \end{itemize}                                                                           & \begin{itemize}
+                                                                                                  \itemsep0em
+                                                                                                  \item The loss function is dependent on number of correspondences.
+                                                                                                  \item The network performance degrades while training for batch size > 1.
+                                                                                                  \item The descriptors have non-optimal spatial expectations when queried.
+                                                                                              \end{itemize}                                                          \\ \hline
+    \multicolumn{2}{m{14cm}}{\centering Dense Visual Learning for Robot Manipulation\cite{florence2020dense}}                                                                                                                   \\ \hline
+    \begin{itemize}
+        \itemsep0em
+        \item Introduced ``Pixelwise Distribution Loss'' robust against incorrect correspondence sampling encountered by pixelwise contrastive loss.
+        \item The pixelwise distribution loss not need non-matching correspondence to train \ac{DON}.
+    \end{itemize}                             & \begin{itemize}
+                                                    \itemsep0em
+                                                    \item The pixelwise distributional loss function cannot accomodate same objects in an image while training.
+                                                \end{itemize}                                                                      \\ \hline
+    \multicolumn{2}{m{14cm}}{\centering Supervised Training of Dense Object Nets using Optimal Descriptors for Industrial Robotic Applications\cite{kupcsik2021supervised}}                                                     \\ \hline
+    \begin{itemize}
+        \itemsep0em
+        \item Emphasized that \ac{DON}'s are not efficient while training on small \& shiny objects due to noisy correspondence generated from the consumer grade depth cameras.
+        \item Used 3D model with Laplacian Eigenmaps for supervised training of \ac{DON}.
+    \end{itemize} & \begin{itemize}
+                        \itemsep0em
+                        \item Used 3D models to remap objects in images for reconstructing depths.
+                        \item Laplacian Eigenmaps are computational costly and do not handle occlusion.
+                    \end{itemize}                                                     \\ \hline
+    \multicolumn{2}{m{14cm}}{\centering Fully Self-Supervised Class Awareness in Dense Object Descriptors\cite{hadjivelichkov2021fully}  }                                                                                      \\ \hline
+    \begin{itemize}
+        \itemsep0em
+        \item Introduced loss functions to train \ac{DON} in an unsupervised manner.
+        \item The loss functions introduced hard and soft margins to pixelwise contrastive loss.
+    \end{itemize}                                                                                 & \begin{itemize}
+                                                                                                        \item Does not handle occluded scenes.
+                                                                                                    \end{itemize}                                                                                       \\ \hline
+    \multicolumn{2}{m{14cm}}{\centering Efficient and Robust Training of Dense Object Nets for Multi-Object Robot Manipulation\cite{adrian2022efficient}  }                                                                     \\ \hline
+    \begin{itemize}
+        \itemsep0em
+        \item Adapted NTXent-Loss on a pixelwise scale to train multiobject scene \ac{DON}.
+        \item Proposed that \ac{DON} relies on color hues of objects to reconstruct geometric priors.
+        \item Benchmarked all \ac{DON} loss functions.
+        \item Used synthetic correspondences to train \ac{DON} without depth information.
+    \end{itemize}                                                                            & \begin{itemize}
+                                                                                                   \itemsep0em
+                                                                                                   \item Did not accomodate training \ac{DON}  that belongs to the same class.
+                                                                                               \end{itemize}                                                       \\ \hline
+    \multicolumn{2}{m{14cm}}{\centering NeRF-Supervision: Learning Dense Object Descriptors from Neural Radiance Fields\cite{nerf-Supervision} }                                                                                \\ \hline
+    \begin{itemize}
+        \itemsep0em
+        \item Used \ac{NeRF}  to train \ac{DON} making it robust against shiny surfaces.
+    \end{itemize}                                                                                         & \begin{itemize}
+                                                                                                                \itemsep0em
+                                                                                                                \item \ac{NeRF} does not work in multi-object scences where an object is missing in another viewpoint.
+                                                                                                            \end{itemize}               \\ \hline
+    \multicolumn{2}{m{14cm}}{\centering kPAM: Keypoint Affordances for Category-Level Robotic Manipulation\cite{kpam} }                                                                                                         \\ \hline
+    \begin{itemize}
+        \itemsep0em
+        \item Introduced object representation using 3D-Keypoints to generalize pose.
+        \item Avoids task-inappropriate geometric information.
+    \end{itemize}                                                                                            &                                                                                                                  \\ \hline
+    \multicolumn{2}{m{14cm}}{\centering S3K: Self-Supervised Semantic Keypoints for Robotic Manipulation via Multi-View Consistency\cite{vecerik2020s3k}}                                                                       \\ \hline
+    \begin{itemize}
+        \itemsep0em
+        \item Improved object representation with semantic 3D-keypoints.
+        \item Used multi-view consistency loss for training robustly against occlusion, noise and absence of visible texture.
+    \end{itemize}                                                    &                                                                                                        \\ \hline
+    \multicolumn{2}{m{14cm}}{\centering Discovery of Latent 3D Keypoints via End-to-end Geometric Reasoning\cite{suwajanakorn2018discovery}}                                                                                    \\ \hline
+    \begin{itemize}
+        \itemsep0em
+        \item Introduced 'KeypointNet' for geometric reasoning.
+        \item Used pretrained orientation network for making predictions on symmetrical objects more robust.
+        \item Used self-supervised loss functions with end-to-end training methods.
+    \end{itemize}                                                                     & \begin{itemize}
+                                                                                            \itemsep0em
+                                                                                            \item Uses chordal distances for computing distances in rotational matrices.
+                                                                                            \item Accomodates objects belonging to the same class.
+                                                                                        \end{itemize}                                                             \\ \hline
+    \multicolumn{2}{m{14cm}}{\centering Neural Descriptor Fields: SE(3)-Equivariant Object Representations for Manipulation\cite{ndfs}}                                                                                         \\ \hline
+    \begin{itemize}
+        \itemsep0em
+        \item Used neural descriptor model to fuse models of \ac{DON}, Kpam\cite{kpam} and \ac{NeRF} for object manipulation.
+        \item Used neural energy fields to find generalized keypoints for manipulation.
+        \item Used self-supervised loss functions with end-to-end training methods.
+    \end{itemize}                                                    & \begin{itemize}
+                                                                           \itemsep0em
+                                                                           \item Need robot demonstrations to train the neural networks.
+                                                                       \end{itemize}                                                                                             \\ \hline
+    \caption{Comparison of influential \ac{SOTA}.}
+\end{longtable}

@@ -1,0 +1,43 @@
+\chapter{Conclusion}
+
+The thesis set off with the aim of creating artificial intelligence for robots like Chappie and C-3PO.
+These robots can perform generalized tasks rather than task-oriented activities, which is the present state of today's artificial intelligence.
+In particular, the thesis focused on developing generalized representations of an object in an image for robot manipulation solving the present industrial robotics
+problem of teaching robots to pick every object equipped with 2D or 3D vision systems eliminating the need for explicit programming for each object.\\
+
+Set on to implement artificial intelligence with generalizing capabilities, \ac{DON} is implemented.
+The \ac{DON} is introduced to the robotics community by  \citeauthor{florence2018dense}~\cite{florence2018dense} with generalization capabilities of objects in an image.
+The \ac{DON} generates dense descriptor image from an \ac{RGB} image capable of generalizing an object for robot manipulation.
+Furthermore, the thesis benchmarked various loss functions, different \ac{ResNet}
+neural networks. We have identified that, the ``Pixelwise Distribution Loss'' with \ac{ResNet}-34 performs best to generalize objects belonging to the same class (i.e., semantically equivalent) and moreover is computationally
+economical compared to ``Pixelwise NT-Xent Loss''.
+Single class generalized labels manually extracted from the pixels of the dense descriptor image provided by \ac{DON} are applied to various applications like generating robust object 6D poses of objects in cases of illumination changes,
+colour changes, occlusion and different viewpoints and other application being robot grasping.\\
+
+To eliminate the need of manually selecting labels from the dense descriptor image put forth by the \ac{DON}, KeypointNet is implemented.
+The KeypointNet, as described, predicts a set of oriented geometrically consistent keypoints on an object such that it preserves the object's 6D pose.\\
+
+The KeypointNet comes with generalizing properties as it predicts geometrically consistent keypoints across objects belonging to the same class. The generalizing property
+of KeypointNet is exploited to create a semantic correspondence pipeline to train the \ac{DON}, replacing the need for depth information which is often noisy with today's technology of depth cameras available.
+Additionally, the KeypointNet is trained on manifold-based loss making it faster to converge and the need of an orientation network is eliminated.
+Furthermore, the manifold loss implemented to train the KeypointNet limits the object rotation to a range of $[0, \pi]$. The \ac{ResNet}-34 architecture performs optimally for the predicting geometrically consistent keypoints.
+The KeypointNet is sensitive to occlusion and fails to predict keypoints on occluded areas of objects encountered in the training phase. \\
+
+
+As \ac{DON} is robust against occlusion, KeypointNet could benefit from it. KeypointNet trained on \ac{DON} representations, regresses a keypoint that occupies a pixel in the dense descriptor image later where
+this pixel location is queried as a single class generalized label eliminating any need for
+human intervention.\\
+
+The upsampled dense output put forth by the KeypointNet represents dense object representations as an alternative to \ac{DON} to create single-class
+generalized labels. This ushers an idea that there are other networks capable of computing
+dense descriptors image similarly to \ac{DON}.\\
+
+
+Initially, the networks are trained on synthetic data. The synthetic data is too perfect to be generalized on real-world objects. The KeypointNet and \ac{DON} trained
+on the synthetic dataset did not perform well in the wild. The end-to-end training of neural networks showed reduced performance when trained with the synthetic dataset.\\
+
+Synthetic correspondences introduced in \cite{adrian2022efficient} are used to overcome the limitations of training the networks posed by the synthetic data.
+The synthetic correspondences are independent of camera intrinsic and extrinsic information, including depth information to compute correspondences.
+The \ac{DON} is trained on images of caps captured from a smartphone with a camera with synthetic correspondence and performed well, generalizing most of the caps in the wild.\\
+
+The capabilities of \ac{DON} and KeypointNet are demonstrated and applied to generalized autonomous robot task of cap pick-and-place operation.

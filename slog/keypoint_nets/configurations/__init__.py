@@ -1,0 +1,1 @@
+from slog.keypoint_nets.configurations.config import KeypointNetConfig

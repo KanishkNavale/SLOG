@@ -1,0 +1,56 @@
+\cleardoublepage
+
+% Start with German abstracrt
+\begin{otherlanguage}{ngerman}
+    \chapter*{Kurzfassung}
+    \addcontentsline{toc}{chapter}{Kurzfassung}
+
+    In dieser Arbeit wird ein Rahmenwerk für künstliche Intelligenz vorgeschlagen, um eine verallgemeinerte visuelle Objektdarstellung für Roboter-Greifaufgaben zu entwickeln.
+
+    Ein einzelnes Label wird aus der verallgemeinerten visuellen Objektdarstellung extrahiert, um ein Objekt auf einer pixelbasierten Skala zu identifizieren, das dann als Greifpunkt für einen Roboter dient. Die verallgemeinerten visuellen Objektdarstellungen, die aus \ac{DON} berechnet werden, werden zur Berechnung der 6D-Position von Objekten verwendet, um eine robuste Roboter-Greifpipeline zu erstellen. Um die Notwendigkeit einer manuellen Extraktion von Beschriftungen aus den von \ac{DON} berechneten Repräsentationen zu eliminieren, wird KeypointNet implementiert. Die Pipeline für die semantische Objektkorrespondenz wurde auf der Grundlage der Generalisierungsfähigkeiten des KeypointNet entwickelt, um \ac{DON} weiter zu trainieren. Gleichzeitig haben wir festgestellt, dass das KeypointNet für sich genommen bereits die Fähigkeit besitzt, verallgemeinerte visuelle Objektrepräsentationen ähnlich wie \ac{DON} zu berechnen, was den Gedanken nahelegt, dass es auch andere Netzwerke gibt, die in der Lage sind, verallgemeinernde Merkmale zu erzeugen.
+
+
+    Im Kern demonstriert diese Arbeit die eingeschränkten Fähigkeiten von Netzwerken für die Erzeugung verallgemeinerten visuellen Objektdarstellungen, wenn sie nur auf dem synthetischen Datensatz trainiert werden.
+
+    Im Gegensatz zum isolierten KeypointNet konnten wir für das KeypointNet Robustheit gegenüber Objektverdeckungen im Blickpunkt erreichen, wenn es auf \ac{DON}-Darstellungen in einer End-to-End-Methode trainiert wurde. Darüber hinaus wählt das KeypointNet, das mit den von \ac{DON} berechneten Repräsentationen arbeitet, selbstständig einzelne Labels aus und berechnet geometrisch konsistente 6D-Posen für semantisch ähnliche Objekte. Abschließend wird die Robustheit des objektgeneralisierenden Frameworks bei der Generalisierung von realen Kappen und Manipulationen anhand eines realen Robotermanipulators demonstriert.
+
+    \vfill
+    \noindent\textbf{Stichwörter:} Künstliche Intelligenz, verallgemeinerte visuelle Objektrepräsentationen, \ac{DON}, KeypointNet,
+    geometrisch konsistente Keypoints, semantische Objektkorrespondenz-Pipeline,
+    \ac{DON}-Informiertes KeypointNet, Ende-zu-Ende-Training von neuronalen Netzen, synthetischer Datensatz,
+    robuste 6D-Objektposen, Eizelnlabel-Objekgreifen, Demonstration von Roboteraufgaben
+    \vfill
+\end{otherlanguage}
+% Then continue with the english one.
+\begin{otherlanguage}{english}
+    \chapter*{Abstract}
+    \addcontentsline{toc}{chapter}{Abstract}
+
+    The thesis proposes an artificial intelligence framework to develop generalized visual object representation for robot grasping tasks.
+
+    A single label is extracted from the generalized visual object representation to identify an object on a pixel-wise scale, acting as a robot grasping point.
+    The generalized visual object representations computed from DON are applied to compute objects' 6D pose to create a robust robot grasping pipeline.
+    To eliminate the need for the manual label
+    extraction from the representations computed by DON, KeypointNet is implemented.
+    The semantic object correspondence pipeline is engineered based on generalizing capabilities of the KeypointNet to train DON further.
+    At the same time, the thesis identified that
+    the KeypointNet on its own already demonstrates the capabilities of computing generalized visual object representation similar to DON, ushering the idea that there are other
+    networks capable of generalizing features.
+
+    At its core, this thesis demonstrates the reduced capabilities of networks to produce generalized visual object representation when only trained on the synthetic dataset.
+
+    In contrast to KeypointNet training in isolation,
+    the thesis could achieve robustness for the KeypointNet against the object occlusions in viewpoint
+    when trained on \ac{DON} representations in an end-to-end fashion.
+    Furthermore, the KeypointNet trained with \ac{DON} representations
+    autonomously picks single class generalized labels.
+    Additionally, computing geometrically consistent 6D poses across semantically similar objects.
+
+    Finally, the proposed framework demonstrates robustness in generalizing real-world caps and manipulation by employing a real-world robot manipulator.
+
+
+    \vfill
+    \noindent\textbf{Keywords:} artificial intelligence, generalized visual object representations, \ac{DON}, KeypointNet, geometrically consistent keypoints, semantic object correspondence pipeline, \ac{DON} Informed KeypointNet, end-to-end neural network training, synthetic dataset, robust object 6D poses, single label object grasping,
+    robot task demonstration
+    \vfill
+\end{otherlanguage}

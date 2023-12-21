@@ -1,0 +1,139 @@
+\documentclass[ a4paper,
+                oneside,
+                toc=bibliography,
+                toc=listof
+                ]{scrbook}
+
+\input{settings}
+
+
+% Path to .bib file for BibLatex
+\addbibresource{bibliography.bib}
+% \addbibresource{someOtherBibFile}
+
+\author{Kanishk Umesh Navale}
+\placeOfBirth{India}
+\address{Allmandring 22A-10, 70569 Stuttgart}
+\major{Computer Science}
+\title{SLOG: Single Label Object Grasping}
+\titleTranslated{Einklassige verallgemeinerte visuelle Einbettung von Objektpunkten für das Greifen von Robotern}
+\matrnr{3437531}
+\date{31 October 2022}
+\supervisor{Mr. Tobius Bux}
+\professor{Prof. Andreas Wortmann}
+
+
+\usepackage{soul}
+\usepackage{amsmath,amssymb,graphicx, mathtools, wasysym}
+\usepackage{verbatim}
+\usepackage{relsize}
+\usepackage{adjustbox}
+\usepackage{float, array}
+
+\usepackage{listings}
+\usepackage{xcolor}
+
+\colorlet{punct}{red!60!black}
+\definecolor{background}{HTML}{EEEEEE}
+\definecolor{delim}{RGB}{20,105,176}
+\colorlet{numb}{magenta!60!black}
+
+\lstdefinelanguage{json}{
+    basicstyle=\small,
+    numbers=left,
+    numberstyle=\scriptsize,
+    stepnumber=1,
+    numbersep=8pt,
+    showstringspaces=false,
+    breaklines=true,
+    frame=lines,
+    backgroundcolor=\color{background},
+    literate=
+     *{0}{{{\color{numb}0}}}{1}
+      {1}{{{\color{numb}1}}}{1}
+      {2}{{{\color{numb}2}}}{1}
+      {3}{{{\color{numb}3}}}{1}
+      {4}{{{\color{numb}4}}}{1}
+      {5}{{{\color{numb}5}}}{1}
+      {6}{{{\color{numb}6}}}{1}
+      {7}{{{\color{numb}7}}}{1}
+      {8}{{{\color{numb}8}}}{1}
+      {9}{{{\color{numb}9}}}{1}
+      {:}{{{\color{punct}{:}}}}{1}
+      {,}{{{\color{punct}{,}}}}{1}
+      {\{}{{{\color{delim}{\{}}}}{1}
+      {\}}{{{\color{delim}{\}}}}}{1}
+      {[}{{{\color{delim}{[}}}}{1}
+      {]}{{{\color{delim}{]}}}}{1},
+}
+
+
+\newcommand*{\captionsource}[2]{%
+  \caption[{#1}]{%
+    #1%
+    \\%
+    \textbf{Source:} #2%
+  }%
+}
+
+\begin{document}
+
+\frontmatter
+\makeISWtitle
+
+\cleardoublepage
+\setcounter{page}{1} % start at page (i) after title page
+\declarationOfOriginality
+
+% Kurzfassung/Abstract
+\input{chapters/Abstract}
+\input{chapters/Acknowledgement}
+
+\cleardoublepage
+\currentpdfbookmark{\contentsname}{Inhalt}
+\tableofcontents
+
+
+\mainmatter
+% ********************************************************************
+% Write your own contents here:
+% ********************************************************************
+
+
+
+
+\input{chapters/Introduction}
+\input{chapters/SOTA}
+\input{chapters/Objective}
+\input{chapters/Methodology}
+\input{chapters/Benchmarking}
+\input{chapters/Conclusion}
+\input{chapters/future}
+
+
+%\chapter{Conclusions}
+
+% ********************************************************************
+% End of contents
+% ********************************************************************
+
+\cleardoublepage
+\printbibliography
+
+\cleardoublepage
+\input{chapters/Acronyms}
+
+\cleardoublepage
+\listoffigures
+
+\cleardoublepage
+\listoftables
+\lstlistoflistings
+
+\input{chapters/Symbols}
+
+%% Appendix, if needed:
+% \appendix
+% \chapter{Example appendix chapter}
+
+\end{document}

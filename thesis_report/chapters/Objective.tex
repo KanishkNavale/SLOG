@@ -1,0 +1,15 @@
+\chapter{Objective}
+
+This thesis focuses on engineering a single semantic class-generalized label ($x \in \mathbb{R}^D$) acting as a robot grasping point in an image.
+If no possible labels are found in the image search space, then KeypointNet is deployed as a fail-safe to regress geometrically consistent keypoints
+on the object in turn generating a valid 6D-Pose of the object for robot grasping.\\
+
+As the recent rasearch preceedings \parencites{florence2018dense}{adrian2022efficient}{rope-manipulation}{block-manipulation}
+introduced different \ac{CNN}-based \ac{ResNet}~\cite{resnet} architectures and loss functions to implement \ac{DON}, the best combination
+of \ac{ResNet} architecture and loss function will be chosen by benchmarking all the valid combinations.\\
+
+Furthermore, one object will be selected for generalization using \ac{DON} to manually store a valid specific generealized label for robot
+grasping. To eliminate the process of manually selecting labels, KeypointNet will be implemented.\\
+
+Based on the availability of the datasets, synthetic data \cite{nikolenko2021synthetic} will be generated to train the neural networks if no
+ready datasets are available.
