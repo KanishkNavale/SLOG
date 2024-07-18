@@ -1,6 +1,6 @@
 # SLOG: Single Label Object Grasping
 
-Master thesis submitted to Universität Stuttgart for graduation (2022).
+M.Sc. Computer Science (Autonomous Systems) graduation thesis submitted to Universität Stuttgart, 2022.
 
 <p align="center"><img src="thesis_report/images/robot/aligned.png" width="750">
 
